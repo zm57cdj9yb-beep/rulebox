@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 1,
+  "watcherActive": true,
+  "folders": [
+    {
+      "id": "A0000001-0000-4000-8000-000000000001",
+      "name": "Downloads Cleanup",
+      "path": "/tmp/Downloads",
+      "iconName": "arrow.down.circle.fill",
+      "isEnabled": true,
+      "includeSubfolders": false,
+      "rules": [
+        {
+          "id": "A0000001-0000-4000-8000-000000000011",
+          "name": "Trash Old Installers (>14 Days)",
+          "isEnabled": true,
+          "matchMode": "All",
+          "stopProcessingMoreRules": true,
+          "conditions": [
+            {
+              "id": "A0000001-0000-4000-8000-000000000101",
+              "field": "Kind",
+              "op": "is",
+              "value": "Disk Image",
+              "caseSensitive": false
+            },
+            {
+              "id": "A0000001-0000-4000-8000-000000000102",
+              "field": "Age (Days)",
+              "op": "is greater than",
+              "value": "14",
+              "caseSensitive": false
+            }
+          ],
+          "actions": [
+            {
+              "id": "A0000001-0000-4000-8000-000000000201",
+              "kind": "Move to Trash",
+              "targetPath": "",
+              "pattern": "",
+              "tagName": "",
+              "script": "",
+              "conflictPolicy": "Rename with counter"
+            }
+          ]
+        },
+        {
+          "id": "A0000001-0000-4000-8000-000000000012",
+          "name": "Sort Archives by Year",
+          "isEnabled": true,
+          "matchMode": "All",
+          "stopProcessingMoreRules": true,
+          "conditions": [
+            {
+              "id": "A0000001-0000-4000-8000-000000000103",
+              "field": "Extension",
+              "op": "is in",
+              "value": "zip,tar,gz,7z",
+              "caseSensitive": false
+            }
+          ],
+          "actions": [
+            {
+              "id": "A0000001-0000-4000-8000-000000000202",
+              "kind": "Add Finder Tag",
+              "targetPath": "",
+              "pattern": "",
+              "tagName": "Purple",
+              "script": "",
+              "conflictPolicy": "Rename with counter"
+            },
+            {
+              "id": "A0000001-0000-4000-8000-000000000203",
+              "kind": "Sort into Subfolder",
+              "targetPath": "",
+              "pattern": "Archives/[Year]",
+              "tagName": "",
+              "script": "",
+              "conflictPolicy": "Rename with counter"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

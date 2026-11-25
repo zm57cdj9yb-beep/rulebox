@@ -1,0 +1,68 @@
+{
+  "schemaVersion": 1,
+  "watcherActive": true,
+  "folders": [
+    {
+      "id": "B0000001-0000-4000-8000-000000000001",
+      "name": "Invoice Inbox",
+      "path": "/tmp/Inbox",
+      "iconName": "doc.text.fill",
+      "isEnabled": true,
+      "includeSubfolders": false,
+      "rules": [
+        {
+          "id": "B0000001-0000-4000-8000-000000000011",
+          "name": "Auto-File PDF Invoices by Content",
+          "isEnabled": true,
+          "matchMode": "All",
+          "stopProcessingMoreRules": true,
+          "conditions": [
+            {
+              "id": "B0000001-0000-4000-8000-000000000101",
+              "field": "Kind",
+              "op": "is",
+              "value": "PDF",
+              "caseSensitive": false
+            },
+            {
+              "id": "B0000001-0000-4000-8000-000000000102",
+              "field": "Contents (Text/PDF)",
+              "op": "contains",
+              "value": "Invoice",
+              "caseSensitive": false
+            }
+          ],
+          "actions": [
+            {
+              "id": "B0000001-0000-4000-8000-000000000201",
+              "kind": "Add Finder Tag",
+              "targetPath": "",
+              "pattern": "",
+              "tagName": "Green",
+              "script": "",
+              "conflictPolicy": "Rename with counter"
+            },
+            {
+              "id": "B0000001-0000-4000-8000-000000000202",
+              "kind": "Rename",
+              "targetPath": "",
+              "pattern": "[Year]-[Month]_[Name].[Ext]",
+              "tagName": "",
+              "script": "",
+              "conflictPolicy": "Rename with counter"
+            },
+            {
+              "id": "B0000001-0000-4000-8000-000000000203",
+              "kind": "Sort into Subfolder",
+              "targetPath": "",
+              "pattern": "Invoices/[Year]",
+              "tagName": "",
+              "script": "",
+              "conflictPolicy": "Rename with counter"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

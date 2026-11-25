@@ -1,0 +1,59 @@
+{
+  "schemaVersion": 1,
+  "watcherActive": true,
+  "folders": [
+    {
+      "id": "C0000001-0000-4000-8000-000000000001",
+      "name": "Desktop Screenshots",
+      "path": "/tmp/Desktop",
+      "iconName": "camera.viewfinder",
+      "isEnabled": true,
+      "includeSubfolders": false,
+      "rules": [
+        {
+          "id": "C0000001-0000-4000-8000-000000000011",
+          "name": "Group Screenshots by Year and Month",
+          "isEnabled": true,
+          "matchMode": "All",
+          "stopProcessingMoreRules": true,
+          "conditions": [
+            {
+              "id": "C0000001-0000-4000-8000-000000000101",
+              "field": "Kind",
+              "op": "is",
+              "value": "Image",
+              "caseSensitive": false
+            },
+            {
+              "id": "C0000001-0000-4000-8000-000000000102",
+              "field": "Name",
+              "op": "starts with",
+              "value": "Screenshot",
+              "caseSensitive": false
+            }
+          ],
+          "actions": [
+            {
+              "id": "C0000001-0000-4000-8000-000000000201",
+              "kind": "Add Finder Tag",
+              "targetPath": "",
+              "pattern": "",
+              "tagName": "Blue",
+              "script": "",
+              "conflictPolicy": "Rename with counter"
+            },
+            {
+              "id": "C0000001-0000-4000-8000-000000000202",
+              "kind": "Sort into Subfolder",
+              "targetPath": "",
+              "pattern": "Screenshots/[Year]/[Month]",
+              "tagName": "",
+              "script": "",
+              "conflictPolicy": "Rename with counter"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
