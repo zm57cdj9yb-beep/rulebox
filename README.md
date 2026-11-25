@@ -39,7 +39,7 @@ Measured on an **Apple M2 (8 GB RAM, macOS 27.2)** using a release build (`swift
 | PDF Content Matching | Yes (`PDFKit`) | Yes (plus OCR & custom date tokens) | Via scripts | Limited |
 | 1-Click Undo Journal | Yes (move, rename, tag, archive) | Trash / manual | None | None |
 | Maturity & Code Signing | Ad-hoc signed v1.0 | **Apple Notarized (18+ years mature)** | Built into macOS | Built into macOS |
-| App Size | **2.9 MB** | ~25 MB | Built-in | Built-in |
+| App Size | **2.9 MB** | Native macOS app | Built-in | Built-in |
 
 **When another tool is a better fit:**
 - Use **Hazel** if you need an Apple-notarized, battle-tested utility with OCR date-token extraction, Apple Photos/Music integration, and nested rule-matching conditions.
@@ -57,7 +57,7 @@ Three ready-to-inspect `.rulebox` JSON files live in [`examples/`](examples/READ
 
 ### Pre-Built Release (macOS 14+ Apple Silicon)
 
-1. Download `RuleBox-v1.0.0-macOS-arm64.zip` (and optional `SHA256SUMS.txt`) from [GitHub Releases](https://github.com/zm57cdj9yb-beep/rulebox/releases/latest).
+1. Download `RuleBox-v1.0.1-macOS-arm64.zip` (and optional `SHA256SUMS.txt`) from [GitHub Releases](https://github.com/zm57cdj9yb-beep/rulebox/releases/latest).
 2. Unzip and move `RuleBox.app` to `/Applications`.
 3. Because this open-source build is **ad-hoc signed** (not Apple Developer ID notarized), clear Gatekeeper quarantine once:
    ```bash
@@ -88,7 +88,7 @@ open "build/RuleBox.app"
 
 - **Ad-hoc signing:** Releases require the one-time `xattr -dr com.apple.quarantine` command until Apple Developer ID notarization is added.
 - **No OCR on scanned image-only PDFs yet:** `Contents (Text/PDF)` reads embedded PDF text via `PDFKit`; Vision OCR fallback for scanned PDFs is not implemented yet.
-- **Watcher mode in v1.0:** Background kernel events automatically refresh live dry-run match counts; automatic unattended execution on file drop (vs. clicking **Run Rules**) is intentionally opt-in in a future release so new users cannot accidentally move files while testing rules.
+- **Per-folder Auto-Run safety default:** Background kernel events automatically refresh live dry-run counts on all watched folders; unattended execution on file drop is controlled by each folder's **Auto-Run** toggle (off by default on the demo sandbox so new users can inspect previews first, with a 1.2s re-entrancy cooldown when enabled).
 
 ## Contributing & Security
 

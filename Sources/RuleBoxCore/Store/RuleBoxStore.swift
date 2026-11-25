@@ -27,6 +27,7 @@ public final class RuleBoxStore {
     private let workspaceFileURL: URL
     private let activityFileURL: URL
     private var watcher: FolderWatcher?
+    private var lastAutoRunByFolder: [UUID: Date] = [:]
 
     public init(supportDir: URL? = nil, startWatcher: Bool = true) {
         let dir = supportDir ?? DemoWorkspaceGenerator.defaultSupportDirectory()
@@ -312,9 +313,29 @@ public final class RuleBoxStore {
         statusMessage = "Demo sample files restored"
     }
 
+    public func toggleAutoRun(for folderID: UUID) {
+        guard let idx = workspace.folders.firstIndex(where: { $0.id == folderID }) else { return }
+        workspace.folders[idx].autoRunOnChange.toggle()
+        saveWorkspace()
+        statusMessage = workspace.folders[idx].autoRunOnChange
+            ? "Auto-run enabled for \(workspace.folders[idx].name)"
+            : "Auto-run paused for \(workspace.folders[idx].name)"
+    }
+
     private func handleWatchedFolderEvent(folderID: UUID) {
         guard workspace.watcherActive else { return }
-        refreshAllPreviews()
+        guard let folder = workspace.folders.first(where: { $0.id == folderID && $0.isEnabled }) else { return }
+        if folder.autoRunOnChange {
+            let now = Date()
+            if let prev = lastAutoRunByFolder[folderID], now.timeIntervalSince(prev) < 1.2 {
+                refreshAllPreviews()
+                return
+            }
+            lastAutoRunByFolder[folderID] = now
+            runFolderNow(id: folderID)
+        } else {
+            refreshAllPreviews()
+        }
     }
 
     // MARK: - Persistence & Import/Export

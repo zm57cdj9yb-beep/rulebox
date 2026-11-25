@@ -379,27 +379,26 @@ struct RuleEditorView: View {
             }
 
             if action.kind == .rename || action.kind == .sortIntoSubfolder {
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: 5) {
-                        Text("Tokens:")
-                            .font(.system(size: 10.5))
-                            .foregroundStyle(.secondary)
-                            .fixedSize()
-                        ForEach(["[Name]", "[Ext]", "[Year]", "[Month]", "[Date]", "[Counter]"], id: \.self) { tok in
-                            Button(tok) {
-                                mutate { $0.actions[index].pattern.append(tok) }
-                            }
-                            .buttonStyle(.plain)
-                            .font(.system(size: 10, weight: .medium, design: .monospaced))
-                            .fixedSize()
-                            .padding(.horizontal, 6)
-                            .padding(.vertical, 2.5)
-                            .background(Color.accentColor.opacity(0.14), in: RoundedRectangle(cornerRadius: 4))
-                            .foregroundStyle(Color.accentColor)
+                HStack(spacing: 5) {
+                    Text("Tokens:")
+                        .font(.system(size: 10.5))
+                        .foregroundStyle(.secondary)
+                        .fixedSize()
+                    ForEach(["[Name]", "[Ext]", "[Year]", "[Month]", "[Date]", "[Counter]"], id: \.self) { tok in
+                        Button(tok) {
+                            mutate { $0.actions[index].pattern.append(tok) }
                         }
+                        .buttonStyle(.plain)
+                        .font(.system(size: 10, weight: .medium, design: .monospaced))
+                        .fixedSize()
+                        .padding(.horizontal, 5.5)
+                        .padding(.vertical, 2.5)
+                        .background(Color.accentColor.opacity(0.14), in: RoundedRectangle(cornerRadius: 4))
+                        .foregroundStyle(Color.accentColor)
                     }
+                    Spacer(minLength: 0)
                 }
-                .padding(.leading, 170)
+                .padding(.leading, 8)
             }
         }
     }

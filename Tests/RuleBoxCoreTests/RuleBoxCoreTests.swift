@@ -268,6 +268,24 @@ final class RuleBoxCoreTests: XCTestCase {
             let ws = try decoder.decode(RuleBoxWorkspace.self, from: data)
             XCTAssertFalse(ws.folders.isEmpty, "Example \(file.lastPathComponent) has no folders")
             XCTAssertFalse(ws.folders[0].rules.isEmpty, "Example \(file.lastPathComponent) has no rules")
+            XCTAssertFalse(ws.folders[0].autoRunOnChange)
         }
+    }
+
+    @MainActor
+    func testAutoRunTogglePersistsAndTriggersOnFolderEvent() throws {
+        let dir = try makeTempDir("autorun")
+        defer { try? FileManager.default.removeItem(at: dir) }
+
+        let store = RuleBoxStore(supportDir: dir, startWatcher: false)
+        let firstID = try XCTUnwrap(store.workspace.folders.first?.id)
+        XCTAssertFalse(store.workspace.folders[0].autoRunOnChange)
+
+        store.toggleAutoRun(for: firstID)
+        XCTAssertTrue(store.workspace.folders[0].autoRunOnChange)
+
+        // Reload from disk and verify persistence
+        let reloaded = RuleBoxStore(supportDir: dir, startWatcher: false)
+        XCTAssertTrue(reloaded.workspace.folders[0].autoRunOnChange)
     }
 }

@@ -35,9 +35,18 @@ struct RuleListView: View {
                         .lineLimit(1)
                         .truncationMode(.middle)
                     Spacer()
-                    Text("\(store.fileCountByFolder[folder.id] ?? 0) files")
+                    Toggle("Auto-Run", isOn: Binding(
+                        get: { folder.autoRunOnChange },
+                        set: { _ in store.toggleAutoRun(for: folder.id) }
+                    ))
+                    .toggleStyle(.checkbox)
+                    .controlSize(.mini)
+                    .font(.system(size: 11))
+                    .help("Automatically execute matching rules when files are dropped into this folder")
+                    Text("· \(store.fileCountByFolder[folder.id] ?? 0) files")
                         .font(.system(size: 11, weight: .medium))
                         .foregroundStyle(.secondary)
+                        .fixedSize()
                 }
             }
             .padding(.horizontal, 14)
@@ -132,7 +141,7 @@ private struct RuleCardRow: View {
                 Spacer()
 
                 if matchCount > 0 {
-                    Text("\(matchCount) match")
+                    Text("\(matchCount) match\(matchCount == 1 ? "" : "es")")
                         .font(.system(size: 10.5, weight: .semibold, design: .rounded))
                         .foregroundStyle(isSelected ? Color.white : Color.accentColor)
                         .padding(.horizontal, 7)
@@ -142,7 +151,7 @@ private struct RuleCardRow: View {
                             in: Capsule()
                         )
                 } else {
-                    Text("0 match")
+                    Text("0 matches")
                         .font(.system(size: 10.5, weight: .medium))
                         .foregroundStyle(.tertiary)
                 }

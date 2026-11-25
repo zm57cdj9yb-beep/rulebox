@@ -2,6 +2,14 @@
 
 All notable changes to RuleBox are documented in this file.
 
+## [1.0.1] - 2026-11-25
+
+### Added
+- **Per-folder Auto-Run on file drop:** Added `autoRunOnChange` toggle per watched folder wired directly to the debounced `O_EVTONLY` kernel `FolderWatcher` with a 1.2s re-entrancy cooldown.
+
+### Fixed
+- **UI polish:** Fixed `[Counter]` token chip clipping in the Rename action row and pluralized match count badges (`2 matches`, `0 matches`).
+
 ## [1.0.0] - 2026-11-25
 
 ### Added

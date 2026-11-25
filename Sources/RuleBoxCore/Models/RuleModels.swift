@@ -251,6 +251,7 @@ public struct WatchedFolder: Codable, Equatable, Hashable, Identifiable, Sendabl
     public var iconName: String
     public var isEnabled: Bool
     public var includeSubfolders: Bool
+    public var autoRunOnChange: Bool
     public var rules: [AutomationRule]
 
     public init(
@@ -260,6 +261,7 @@ public struct WatchedFolder: Codable, Equatable, Hashable, Identifiable, Sendabl
         iconName: String = "folder.fill",
         isEnabled: Bool = true,
         includeSubfolders: Bool = false,
+        autoRunOnChange: Bool = false,
         rules: [AutomationRule] = []
     ) {
         self.id = id
@@ -268,7 +270,24 @@ public struct WatchedFolder: Codable, Equatable, Hashable, Identifiable, Sendabl
         self.iconName = iconName
         self.isEnabled = isEnabled
         self.includeSubfolders = includeSubfolders
+        self.autoRunOnChange = autoRunOnChange
         self.rules = rules
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id, name, path, iconName, isEnabled, includeSubfolders, autoRunOnChange, rules
+    }
+
+    public init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        id = try c.decode(UUID.self, forKey: .id)
+        name = try c.decode(String.self, forKey: .name)
+        path = try c.decode(String.self, forKey: .path)
+        iconName = try c.decodeIfPresent(String.self, forKey: .iconName) ?? "folder.fill"
+        isEnabled = try c.decodeIfPresent(Bool.self, forKey: .isEnabled) ?? true
+        includeSubfolders = try c.decodeIfPresent(Bool.self, forKey: .includeSubfolders) ?? false
+        autoRunOnChange = try c.decodeIfPresent(Bool.self, forKey: .autoRunOnChange) ?? false
+        rules = try c.decodeIfPresent([AutomationRule].self, forKey: .rules) ?? []
     }
 }
 
