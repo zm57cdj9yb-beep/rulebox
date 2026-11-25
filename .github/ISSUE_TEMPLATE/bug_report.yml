@@ -1,0 +1,25 @@
+name: Bug Report
+description: Report a rule matching bug, file operation error, or UI issue
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: input
+    id: macos
+    attributes:
+      label: macOS Version & Chip
+      placeholder: "e.g. macOS 15.3, Apple M2"
+    validations:
+      required: true
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Include the rule conditions/actions and sample filename.
+    validations:
+      required: true
